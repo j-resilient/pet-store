@@ -1,0 +1,23 @@
+{
+  "name": "pet-store",
+  "version": "1.0.0",
+  "description": "HW6 for 'Programming for the Web with JavaScript'. Use Node.js and MongoDB to create a web API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmccarty10/pet-store.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmccarty10/pet-store/issues"
+  },
+  "homepage": "https://github.com/jmccarty10/pet-store#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.4.22"
+  }
+}
