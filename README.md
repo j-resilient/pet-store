@@ -19,7 +19,7 @@ get information about pets and pet toys that the fictional store sells.
 - Animal.js: Provided by course, defines the Animal schema.
 - Toy.js:  Provided by course, defines the Toy schema.
 # ToDo
-- [] Find a way to populate the database so I have something to work with.
+- [X] Find a way to populate the database so I have something to work with.
 Implement 4 APIs.
 - [] /findToy       finds and returns the toy by id
     Example usage: /findToy?id=1234

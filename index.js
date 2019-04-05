@@ -1,11 +1,27 @@
+/* node index.js */
+
 var express = require('express');
 var app = express();
+
+app.set('view engine', 'ejs');
 
 var Animal = require('./Animal.js');
 var Toy = require('./Toy.js');
 
 app.use('/', (req, res) => {
-  res.json({ msg : 'It works!' });
+  Animal.find( (err, allAnimals) => {
+    if (err) {
+      res.type('html').status(500);
+      res.send('Error: ' + err);
+    }
+    else if (allAnimals.length === 0) {
+      res.type('html').status(200);
+      res.send('There are no animals.');
+    }
+    else {
+      res.render('showAll', { animals: allAnimals });
+    }
+  });
 });
 
 app.listen(3000, () => {
