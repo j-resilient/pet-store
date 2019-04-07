@@ -21,7 +21,7 @@ get information about pets and pet toys that the fictional store sells.
 # ToDo
 - [X] Find a way to populate the database so I have something to work with.
 Implement 4 APIs.
-- [ ] /findToy       finds and returns the toy by id
+- [X] /findToy       finds and returns the toy by id
     Example usage: /findToy?id=1234
 - [ ] /findAnimals   Finds animals that match species, gender, and trait. Complete
     matches only. If one of these parameters is omitted it should be ignored.

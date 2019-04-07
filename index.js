@@ -8,6 +8,31 @@ app.set('view engine', 'ejs');
 var Animal = require('./Animal.js');
 var Toy = require('./Toy.js');
 
+app.use('/findToy', (req, res) => {
+  if (req.query.id !== undefined) {
+    Toy.find({id: req.query.id }, (err, toys) => {
+      if (!err) {
+        res.json(toys);
+      }
+      else {
+        res.json({});
+      }
+    });
+  }
+  // empty query:
+  else {
+    res.json({});
+  }
+});
+
+app.use('/displayToys', (req, res) => {
+  Toy.find( (err, toys) => {
+    if (!err) {
+      res.json(toys);
+    }
+  });
+});
+
 app.use('/', (req, res) => {
   Animal.find( (err, allAnimals) => {
     if (err) {
