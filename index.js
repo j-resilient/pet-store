@@ -82,6 +82,34 @@ app.use('/animalsYoungerThan', (req, res) => {
   }
 })
 
+app.use('/calculatePrice', (req, res) => {
+  if (req.query && req.query.id && req.query.qty
+     && req.query.id.length === req.query.qty.length ) {
+    let total = 0;
+    let items = [];
+
+    // create array of objects with ids and quantities
+    req.query.id.forEach((toy, index) => {
+      items.push({item: toy, qty: req.query.qty[index]});
+    });
+
+    // add subtotals to items array
+    items.forEach((current, index) => {
+      Toy.find(current.item, (err, toys) => {
+        if (!err) {
+          console.log(toys);
+          items[index].subtotal = toys.price * items[index].qty;
+        }
+      })
+    })
+    console.log(items);
+  }
+  // there are no query parameters or the wrong number/type of parameters
+  else {
+    res.json({});
+  }
+})
+
 app.use('/displayToys', (req, res) => {
   Toy.find( (err, toys) => {
     if (!err) {
