@@ -25,6 +25,36 @@ app.use('/findToy', (req, res) => {
   }
 });
 
+// species, gender, trait
+app.use('/findAnimal', (req, res) => {
+  if (req.query !== undefined) {
+    let query = {};
+    if (req.query.species) {
+      query.species = req.query.species;
+    }
+    if (req.query.gender) {
+      query.gender = req.query.gender;
+    }
+    if (req.query.trait) {
+      query['traits'] = req.query.trait;
+    }
+
+    // id still displays despite my ongoing efforts
+    Animal.find(query, (err, animals) => {
+      if (!err) {
+        animals.forEach((a) => {
+          delete a['_id'];
+          a.traits = undefined;
+        })
+        res.json(animals);
+      }
+    })
+  }
+  else {
+    res.json({})
+  }
+});
+
 app.use('/displayToys', (req, res) => {
   Toy.find( (err, toys) => {
     if (!err) {
