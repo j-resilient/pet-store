@@ -23,11 +23,11 @@ get information about pets and pet toys that the fictional store sells.
 Implement 4 APIs.
 - [X] /findToy       finds and returns the toy by id
     Example usage: /findToy?id=1234
-- [ ] /findAnimals   Finds animals that match species, gender, and trait. Complete
+- [X] /findAnimals   Finds animals that match species, gender, and trait. Complete
     matches only. If one of these parameters is omitted it should be ignored.
     Returns everything but traits.
     Example usage: /findAnimals?species=Dog&trait=loyal&gender=female
-- [ ] /animalsYoungerThan Finds animals whose age is less than the parameter.
+- [X] /animalsYoungerThan Finds animals whose age is less than the parameter.
     Example usage: /animalsYoungerThan?age=12
 - [ ] /calculatePrice  Calculates the price of the Toys with the corresponding ids
     using specified quantities.

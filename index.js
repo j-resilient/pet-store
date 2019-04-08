@@ -55,6 +55,33 @@ app.use('/findAnimal', (req, res) => {
   }
 });
 
+app.use('/animalsYoungerThan', (req, res) => {
+  if (req.query !== undefined && req.query.age) {
+    const age = Number(req.query.age);
+    let young;
+    let names = [];
+    if (!isNaN(age)) {
+      Animal.find( (err, animals) => {
+        if (!err) {
+          young = animals.filter(a => a.age < age);
+          young.forEach((y) => names.push(y.name));
+
+          young.length === 0 ?
+            res.json({Count: 0}) :
+            res.json({Count: young.length, Names: names});
+        }
+      })
+    }
+    // age is not a number
+    else {
+      res.json({});
+    }
+  }
+  else {
+    res.json({});
+  }
+})
+
 app.use('/displayToys', (req, res) => {
   Toy.find( (err, toys) => {
     if (!err) {
