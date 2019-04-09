@@ -48,6 +48,10 @@ app.use('/findAnimal', (req, res) => {
         })
         res.json(animals);
       }
+      else {
+        res.type('html').status(500);
+        res.send('Error: ' + err);
+      }
     })
   }
   else {
@@ -87,22 +91,35 @@ app.use('/calculatePrice', (req, res) => {
      && req.query.id.length === req.query.qty.length ) {
     let total = 0;
     let items = [];
+    let ids = [];
 
     // create array of objects with ids and quantities
     req.query.id.forEach((toy, index) => {
-      items.push({item: toy, qty: req.query.qty[index]});
+      items.push({item: toy, qty: req.query.qty[index], subtotal: 0});
+      ids.push({id: toy});
     });
 
-    // add subtotals to items array
-    items.forEach((current, index) => {
-      Toy.find(current.item, (err, toys) => {
-        if (!err) {
-          console.log(toys);
-          items[index].subtotal = toys.price * items[index].qty;
+    let query = Toy.find({})
+    query.or(ids);
+    query.exec(function (err, toys) {
+      for (let index = 0; index < items.length; index++) {
+        const i = toys.findIndex((element) => {
+          return element.id === items[index].item;
+        });
+
+        if (i !== -1 && !isNaN(items[index].qty) && !isNaN(items[index].item) && items[index].qty >= 1)  {
+          console.log('not deleting');
+          items[index].subtotal = toys[i].price * items[index].qty;
+          total += items[index].subtotal;
         }
-      })
-    })
-    console.log(items);
+        else {
+          // remove id (current element) from array
+          items.splice(index, 1);
+          index--;
+        }
+      }
+      res.json({totalPrice: total, items: items});
+    });
   }
   // there are no query parameters or the wrong number/type of parameters
   else {
@@ -110,30 +127,9 @@ app.use('/calculatePrice', (req, res) => {
   }
 })
 
-app.use('/displayToys', (req, res) => {
-  Toy.find( (err, toys) => {
-    if (!err) {
-      res.json(toys);
-    }
-  });
-});
-
 app.use('/', (req, res) => {
-  Animal.find( (err, allAnimals) => {
-    if (err) {
-      res.type('html').status(500);
-      res.send('Error: ' + err);
-    }
-    else if (allAnimals.length === 0) {
-      res.type('html').status(200);
-      res.send('There are no animals.');
-    }
-    else {
-      res.render('showAll', { animals: allAnimals });
-    }
-  });
+  res.json({});
 });
-
 app.listen(3000, () => {
   console.log('Listening on port 3000');
 });
