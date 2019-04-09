@@ -8,6 +8,7 @@ app.set('view engine', 'ejs');
 var Animal = require('./Animal.js');
 var Toy = require('./Toy.js');
 
+// find a toy by its id
 app.use('/findToy', (req, res) => {
   if (req.query.id !== undefined) {
     Toy.find({id: req.query.id }, (err, toys) => {
@@ -25,7 +26,7 @@ app.use('/findToy', (req, res) => {
   }
 });
 
-// species, gender, trait
+// find animals by a combination of species, gender, trait
 app.use('/findAnimal', (req, res) => {
   if (req.query !== undefined) {
     let query = {};
@@ -59,6 +60,7 @@ app.use('/findAnimal', (req, res) => {
   }
 });
 
+// display animals younger thana  given age
 app.use('/animalsYoungerThan', (req, res) => {
   if (req.query !== undefined && req.query.age) {
     const age = Number(req.query.age);
@@ -86,6 +88,7 @@ app.use('/animalsYoungerThan', (req, res) => {
   }
 })
 
+// calculate total and subtotals for given toy in given quantities
 app.use('/calculatePrice', (req, res) => {
   if (req.query && req.query.id && req.query.qty
      && req.query.id.length === req.query.qty.length ) {
@@ -127,6 +130,7 @@ app.use('/calculatePrice', (req, res) => {
   }
 })
 
+// default blank page
 app.use('/', (req, res) => {
   res.json({});
 });
